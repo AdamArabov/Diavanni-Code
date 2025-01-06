@@ -1,0 +1,100 @@
+/* "Coded by Adam Arabov" */
+
+/* Ensure the body and html take up the full page */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Allow scrolling */
+  }
+  
+  /* Styling for the shimmering black sky */
+  .sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black; /* Black background */
+    pointer-events: none; /* Prevent interactions */
+    z-index: -1; /* Ensure it's behind other elements */
+  }
+  
+  /* Styling for the shimmering white stars */
+  .shimmer-star {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    fill: white; /* Default white color for the stars */
+    animation: rotateAndShine var(--rotation-duration, 4s) infinite linear, 
+               twinkle var(--twinkle-duration, 5s) infinite ease-in-out;
+    opacity: var(--initial-opacity);
+    transform-origin: center;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    will-change: transform, opacity; /* Optimize for animations */
+  }
+  
+  /* Twinkle effect for general brightness variation */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: var(--min-opacity);
+    }
+    50% {
+      opacity: var(--max-opacity);
+    }
+  }
+  
+  /* Rotate and shine effect (brighter star fill) */
+  @keyframes rotateAndShine {
+    0% {
+      transform: rotate(0deg);
+      fill: white;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+    25% {
+      transform: rotate(90deg);
+      fill: rgba(255, 255, 200, 1); /* Bright yellowish-white */
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+    }
+    50% {
+      transform: rotate(180deg);
+      fill: white;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+    75% {
+      transform: rotate(270deg);
+      fill: rgba(255, 255, 200, 1); /* Bright yellowish-white */
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+    }
+    100% {
+      transform: rotate(360deg);
+      fill: white;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    /* Adjust sky size */
+    .sky {
+      width: 100%;
+      height: 100%;
+    }
+  
+    /* Make stars smaller and more spaced out on mobile */
+    .shimmer-star {
+      width: 0.8em;
+      height: 0.8em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Further reduce star size on small screens */
+    .shimmer-star {
+      width: 0.6em;
+      height: 0.6em;
+    }
+  }
+  

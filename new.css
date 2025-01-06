@@ -1,0 +1,61 @@
+.sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle, #0a0a0a 0%, #000000 100%); /* Elegant dark background */
+    z-index: 9999; /* Ensure it's on top */
+    pointer-events: none; /* Make sure it doesn't interfere with clicks */
+  }
+  
+  /* Styling for the shimmering diamond-like star */
+  .shimmer-star {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    fill: white; /* Default white color */
+    animation: twinkle var(--twinkle-duration) infinite ease-in-out, drift var(--drift-duration) linear infinite;
+    opacity: var(--initial-opacity);
+    transform-origin: center center;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); /* Glowing effect */
+  }
+  
+  /* Smooth and pulsating twinkle animation */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: var(--min-opacity);
+      transform: scale(1);
+    }
+    50% {
+      opacity: var(--max-opacity);
+      transform: scale(1.2); /* Slightly less scaling for a delicate shimmer */
+    }
+  }
+  
+  /* Star drift animation for subtle movement */
+  @keyframes drift {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(var(--drift-direction));
+    }
+  }
+  
+  /* Ensuring that the SVG stars are responsive and adjust based on screen size */
+  @media (max-width: 768px) {
+    .shimmer-star {
+      width: 0.6em; /* Smaller stars on mobile */
+      height: 0.6em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .shimmer-star {
+      width: 0.4em; /* Even smaller stars on very small screens */
+      height: 0.4em;
+    }
+  }
+  
