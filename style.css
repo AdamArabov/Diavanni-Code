@@ -1,4 +1,107 @@
 /* "Coded by Adam Arabov" */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+.shimmer-container {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shimmer-container .shimmer-star {
+  width: 3em;
+  height: 3em;
+  fill: rgba(188, 19, 254, 1); /* Star color */
+  animation: rotateAndShine 4s infinite linear, twinkle 5s infinite ease-in-out;
+  opacity: 0.9;
+  transform-origin: center;
+  filter: drop-shadow(0 0 10px rgba(188, 19, 254, 0.9));
+}
+
+/* The sky where stars will appear */
+.sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* Make sure the background is transparent to see the stars */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Styling for each shimmering star */
+.shimmer-star {
+  position: absolute;
+  z-index: 1000; /* Ensure stars are on top */
+  width: 1em;
+  height: 1em;
+  fill: rgba(188, 19, 254, 1); /* Star color */
+  animation: rotateAndShine var(--rotation-duration, 4s) infinite linear, 
+             twinkle var(--twinkle-duration, 5s) infinite ease-in-out;
+  opacity: var(--initial-opacity);
+  transform-origin: center;
+  filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
+}
+
+/* Keyframes for twinkling effect */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: var(--min-opacity);
+  }
+  50% {
+    opacity: var(--max-opacity);
+  }
+}
+
+/* Keyframes for rotation effect */
+@keyframes rotateAndShine {
+  0% {
+    transform: rotate(0deg);
+    fill: rgba(188, 19, 254, 1);
+    filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
+  }
+  25% {
+    transform: rotate(90deg);
+    fill: rgba(188, 19, 254, 1);
+    filter: drop-shadow(0 0 20px rgba(188, 19, 254, 1));
+  }
+  50% {
+    transform: rotate(180deg);
+    fill: rgba(188, 19, 254, 1);
+    filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
+  }
+  75% {
+    transform: rotate(270deg);
+    fill: rgba(188, 19, 254, 1);
+    filter: drop-shadow(0 0 20px rgba(188, 19, 254, 1));
+  }
+  100% {
+    transform: rotate(360deg);
+    fill: rgba(188, 19, 254, 1);
+    filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
+  }
+}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 768px) {
+  .shimmer-star {
+    width: 0.8em;
+    height: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .shimmer-star {
+    width: 0.6em;
+    height: 0.6em;
+  }
+}
 
 /* Ensure the body and html take up the full page */
 html, body {
