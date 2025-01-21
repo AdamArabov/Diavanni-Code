@@ -8,10 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
-  const maxStars = 150; // Increase number of stars to populate more space
-  const starSizeRange = { min: 6, max: 25 }; // Increased max size for more variety
-  const gridRows = 10; // Number of rows for the grid
-  const gridCols = 10; // Number of columns for the grid
+  // Dynamically adjust number of stars and grid size based on screen width
+  const maxStars = window.innerWidth < 768 ? 50 : 100; // Fewer stars on smaller screens
+  const starSizeRange = window.innerWidth < 768 ? { min: 20, max: 40 } : { min: 25, max: 50 }; // Smaller stars on smaller screens
+  const gridRows = window.innerWidth < 768 ? 5 : 10; // Fewer rows for smaller screens
+  const gridCols = window.innerWidth < 768 ? 5 : 10; // Fewer columns for smaller screens
 
   function createShimmeringStar(x, y) {
     const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -44,13 +45,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const cellWidth = window.innerWidth / gridCols;
     const cellHeight = window.innerHeight / gridRows;
 
-    for (let row = 0; row < gridRows; row++) {
-      for (let col = 0; col < gridCols; col++) {
-        const x = col * cellWidth + Math.random() * (cellWidth / 2);
-        const y = row * cellHeight + Math.random() * (cellHeight / 2);
-        const star = createShimmeringStar(x, y);
-        fragment.appendChild(star);
-      }
+    // Only generate up to maxStars
+    for (let i = 0; i < maxStars; i++) {
+      const row = Math.floor(i / gridCols);
+      const col = i % gridCols;
+      const x = col * cellWidth + Math.random() * (cellWidth / 2);
+      const y = row * cellHeight + Math.random() * (cellHeight / 2);
+      const star = createShimmeringStar(x, y);
+      fragment.appendChild(star);
     }
 
     sky.appendChild(fragment);
@@ -58,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   populateSky();
 });
+
 
 
 
