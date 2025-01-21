@@ -102,11 +102,7 @@
 
 </head>
 <body class="template-{{ template | split: '.' | first }}">
-  <div class="shimmer-container">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="shimmer-star">
-      <path d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z" />
-    </svg>
-  </div>
+ 
 
   <!-- Automatically populated starlight sky -->
   <div class="sky"></div>
@@ -169,4 +165,5 @@
   {%- render 'adastra' with '/src/scripts/component-ar-model.js' -%}
 </body>
 </html>
+
 
