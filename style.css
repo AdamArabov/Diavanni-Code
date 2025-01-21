@@ -1,55 +1,35 @@
 /* "Coded by Adam Arabov" */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* Prevent scrollbars */
-}
-
-.shimmer-container {
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.shimmer-container .shimmer-star {
-  width: 3em;
-  height: 3em;
-  fill: rgba(188, 19, 254, 1); /* Star color */
-  animation: rotateAndShine 4s infinite linear, twinkle 5s infinite ease-in-out;
-  opacity: 0.9;
-  transform-origin: center;
-  filter: drop-shadow(0 0 10px rgba(188, 19, 254, 0.9));
-}
-
-/* The sky where stars will appear */
-.sky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent; /* Make sure the background is transparent to see the stars */
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Styling for each shimmering star */
+/* Styling for the shimmering stars */
 .shimmer-star {
   position: absolute;
-  z-index: 1000; /* Ensure stars are on top */
   width: 1em;
   height: 1em;
-  fill: rgba(188, 19, 254, 1); /* Star color */
-  animation: rotateAndShine var(--rotation-duration, 4s) infinite linear, 
-             twinkle var(--twinkle-duration, 5s) infinite ease-in-out;
+  fill: rgba(188, 19, 254, 1);
+  animation: twinkle var(--twinkle-duration, 5s) infinite ease-in-out, 
+             rotateAndShine var(--rotation-duration, 4s) infinite linear;
   opacity: var(--initial-opacity);
   transform-origin: center;
   filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
 }
 
-/* Keyframes for twinkling effect */
+/* Rainbow Glow Effect */
+.shimmer-star::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  border-radius: 50%;
+  background: conic-gradient(
+    red, orange, yellow, green, blue, indigo, violet, red
+  );
+  animation: rainbowGlow 2s infinite linear;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+/* Keyframes for twinkling light */
 @keyframes twinkle {
   0%, 100% {
     opacity: var(--min-opacity);
@@ -59,40 +39,54 @@ html, body {
   }
 }
 
-/* Keyframes for rotation effect */
+/* Keyframes for rainbow glow effect */
+@keyframes rainbowGlow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+/* Keyframes for rotation */
 @keyframes rotateAndShine {
   0% {
     transform: rotate(0deg);
-    fill: rgba(188, 19, 254, 1);
     filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
-  }
-  25% {
-    transform: rotate(90deg);
-    fill: rgba(188, 19, 254, 1);
-    filter: drop-shadow(0 0 20px rgba(188, 19, 254, 1));
   }
   50% {
     transform: rotate(180deg);
-    fill: rgba(188, 19, 254, 1);
-    filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
-  }
-  75% {
-    transform: rotate(270deg);
-    fill: rgba(188, 19, 254, 1);
     filter: drop-shadow(0 0 20px rgba(188, 19, 254, 1));
   }
   100% {
     transform: rotate(360deg);
-    fill: rgba(188, 19, 254, 1);
     filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.8));
   }
 }
 
-/* Responsiveness for smaller screens */
+/* Mobile-Friendly Adjustments */
 @media (max-width: 768px) {
   .shimmer-star {
     width: 0.8em;
     height: 0.8em;
+    filter: drop-shadow(0 0 6px rgba(188, 19, 254, 0.6));
+    animation: twinkle 6s infinite ease-in-out, 
+               rotateAndShine 5s infinite linear;
+  }
+
+  .shimmer-star::after {
+    top: -4px;
+    left: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    opacity: 0.4;
   }
 }
 
@@ -100,104 +94,16 @@ html, body {
   .shimmer-star {
     width: 0.6em;
     height: 0.6em;
+    filter: drop-shadow(0 0 4px rgba(188, 19, 254, 0.5));
+    animation: twinkle 7s infinite ease-in-out, 
+               rotateAndShine 6s infinite linear;
+  }
+
+  .shimmer-star::after {
+    top: -3px;
+    left: -3px;
+    width: calc(100% + 6px);
+    height: calc(100% + 6px);
+    opacity: 0.3;
   }
 }
-
-/* Ensure the body and html take up the full page */
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Allow scrolling */
-  }
-  
-  /* Styling for the shimmering black sky */
-  .sky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: black; /* Black background */
-    pointer-events: none; /* Prevent interactions */
-    z-index: -1; /* Ensure it's behind other elements */
-  }
-  
-  /* Styling for the shimmering white stars */
-  .shimmer-star {
-    position: absolute;
-    width: 1em;
-    height: 1em;
-    fill: white; /* Default white color for the stars */
-    animation: rotateAndShine var(--rotation-duration, 4s) infinite linear, 
-               twinkle var(--twinkle-duration, 5s) infinite ease-in-out;
-    opacity: var(--initial-opacity);
-    transform-origin: center;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-    will-change: transform, opacity; /* Optimize for animations */
-  }
-  
-  /* Twinkle effect for general brightness variation */
-  @keyframes twinkle {
-    0%, 100% {
-      opacity: var(--min-opacity);
-    }
-    50% {
-      opacity: var(--max-opacity);
-    }
-  }
-  
-  /* Rotate and shine effect (brighter star fill) */
-  @keyframes rotateAndShine {
-    0% {
-      transform: rotate(0deg);
-      fill: white;
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-    }
-    25% {
-      transform: rotate(90deg);
-      fill: rgba(255, 255, 200, 1); /* Bright yellowish-white */
-      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
-    }
-    50% {
-      transform: rotate(180deg);
-      fill: white;
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-    }
-    75% {
-      transform: rotate(270deg);
-      fill: rgba(255, 255, 200, 1); /* Bright yellowish-white */
-      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
-    }
-    100% {
-      transform: rotate(360deg);
-      fill: white;
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-    }
-  }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 768px) {
-    /* Adjust sky size */
-    .sky {
-      width: 100%;
-      height: 100%;
-    }
-  
-    /* Make stars smaller and more spaced out on mobile */
-    .shimmer-star {
-      width: 0.8em;
-      height: 0.8em;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    /* Further reduce star size on small screens */
-    .shimmer-star {
-      width: 0.6em;
-      height: 0.6em;
-    }
-  }
-  
